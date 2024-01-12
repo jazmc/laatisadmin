@@ -10,7 +10,7 @@ $uploaded = false;
 $tuoms = array();
 
 
-require_once "../header_laaa.php";
+require_once "../header.php";
 ?>
 <?php include 'adminlinkit.php'; ?>
 
@@ -298,4 +298,4 @@ WHERE
 
 $conn = null; ?>
 <?php
-require_once '../footer_laaa.php'; ?>
+require_once '../footer.php'; ?>
