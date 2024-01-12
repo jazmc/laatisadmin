@@ -5,7 +5,7 @@ $seuraavatil = $sitaseuraava = $avoimet = array();
 try {
     // tilaisuudet joissa ilmo on auki tai jos missään ei oo nii sit seuraavat tilaisuudet
     $stmt = $conn->prepare("SELECT * FROM Tilaisuus 
-    WHERE IlmoLoppu >= CURRENT_DATE OR Pvm >= CURRENT_DATE
+    WHERE IlmoAlku <= CURRENT_DATE AND (IlmoLoppu >= CURRENT_DATE OR Pvm >= CURRENT_DATE)
     AND Valmis IS NULL 
     ORDER BY IlmoAlku ASC, IlmoLoppu ASC, Pvm ASC;");
     $stmt->execute();
