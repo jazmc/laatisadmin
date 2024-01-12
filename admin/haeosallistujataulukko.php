@@ -40,8 +40,8 @@ function haeOsallistujataulukko($tiettytilaisuus = '0', $admintaulukko = false)
 
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $tilsu = $conn->prepare("SELECT T.*, COUNT(O.Os_ID) as Oslkm, COUNT(IF(Varahevonen='1', 1, NULL)) as Varahevosia FROM Tilaisuus T
-	LEFT JOIN Osallistuminen O ON T.Til_ID = O.Til_ID 
+        $tilsu = $conn->prepare("SELECT T.*, COUNT(O.Os_ID) as Oslkm, COUNT(IF(Varahevonen='1', 1, NULL)) as Varahevosia FROM Osallistuminen O 
+	JOIN Tilaisuus T ON T.Til_ID = O.Til_ID 
     WHERE T.Til_ID >= '$tiettytilaisuus' 
     GROUP BY T.Til_ID
     ORDER BY T.Pvm DESC;");
@@ -118,10 +118,11 @@ function haeOsallistujataulukko($tiettytilaisuus = '0', $admintaulukko = false)
         echo "<table rel=\"" . $til['Til_ID'] . "\" ";
         echo (!$admintaulukko ? "class=\"mt-4\"" : " style=\"margin-top:0;\"");
         echo ">";
-
-        echo "<t" . (!$admintaulukko ? "r><th" : "r class=\"ots-dark\"><td") . " colspan=\"" . (!$admintaulukko ? "3" : "4\" style=\"font-size: small; padding-top: 0.2em; padding-bottom: 0.2em;\"") . "\">" . (!empty($til['Otsikko']) ? $til['Otsikko'] : $kuukausi[date('m', strtotime($til['Pvm']))] . "n tilaisuus") . ", " . date('d.m.Y', strtotime($til['Pvm']));
-        echo " (max. " . $til['Maxos'] . " os.)";
-        echo "</th></tr>";
+        if (!empty($til)) {
+            echo "<t" . (!$admintaulukko ? "r><th" : "r class=\"ots-dark\"><td") . " colspan=\"" . (!$admintaulukko ? "3" : "4\" style=\"font-size: small; padding-top: 0.2em; padding-bottom: 0.2em;\"") . "\">" . (!empty($til['Otsikko']) ? $til['Otsikko'] : $kuukausi[date('m', strtotime($til['Pvm']))] . "n tilaisuus") . ", " . date('d.m.Y', strtotime($til['Pvm']));
+            echo " (max. " . $til['Maxos'] . " os.)";
+            echo "</th></tr>";
+        }
 
         if (count($rows) < 1 && count($th) < 1) {
             echo "<tr><td colspan=\"" . (!$admintaulukko ? "3" : "4") . "\">Ei osallistujia</td></tr></table>";
