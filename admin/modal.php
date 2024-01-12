@@ -92,9 +92,8 @@
                             placeholder="Pisteitä ja palkintoja ei vielä löydy tietokannasta. Copypastaa osallistujakohtaiset tulokset tähän alla olevassa muodossa."
                             disabled></textarea>
                         <small id="textareasel" class="form-text text-muted"><code>VH;PISTEET;PALKINTO;KOMMENTTI</code>
-                            tai vaihtoehtoisesti <code>VH;PISTEET;PALKINTO;ROTU-SKP;NIMI;LINKKI;POIKKEUKSET</code><span
-                                class="text-warning font-italic"><br>Huom! Jos käytät tässä demoversiossa muita kuin
-                                YLAn palkintoja, ne eivät tule näkyviin Palkinnot-sivulle.</span><br>Syötä tähän Google
+                            tai vaihtoehtoisesti
+                            <code>VH;PISTEET;PALKINTO;ROTU-SKP;NIMI;LINKKI;POIKKEUKSET</code><br>Syötä tähän Google
                             Sheetsistä muotoonlaitetut osallistujarivit, niin järjestelmä parsii tietojen joukosta
                             pisteet ja palkinnot. Ei ole väliä, kummassa muodossa laitat pisteet. Jos Sheetsissä on
                             arvosteltu hevosia jotka eivät ilmoittautuneet tilaisuuteen tietokannan kautta, lisääthän ne
