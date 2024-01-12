@@ -76,3 +76,7 @@ tr.ots > td {
 #otsikko {
     height: 100px;
 }
+
+.tuomarit td {
+    vertical-align: top;
+}
