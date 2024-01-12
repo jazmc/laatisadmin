@@ -77,6 +77,10 @@ tr.ots > td {
     height: 100px;
 }
 
+table.mt-4 td {
+    padding: 8px 10px;
+}
+
 .tuomarit td {
     vertical-align: top;
 }
