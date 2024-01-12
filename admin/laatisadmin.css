@@ -68,3 +68,11 @@ h2[data-toggle="collapse"] {
 ol ul > li {
     list-style-type: circle;
 }
+
+tr.ots > td {
+    font-weight: bold;
+}
+
+#otsikko {
+    height: 100px;
+}
