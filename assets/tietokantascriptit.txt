@@ -1,0 +1,240 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:3306
+-- Generation Time: 05.01.2024 klo 12:24
+-- Palvelimen versio: 10.3.39-MariaDB-cll-lve
+-- PHP Version: 8.1.25
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+
+-- --------------------------------------------------------
+
+--
+-- Rakenne taululle `Alue`
+--
+
+CREATE TABLE `Alue` (
+`Alue_ID` int(11) NOT NULL,
+`Otsikko` varchar(200) NOT NULL,
+`Jarjestys` INT NOT NULL DEFAULT '999'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Rakenne taululle `AlueidenTuomarit`
+--
+
+CREATE TABLE `AlueidenTuomarit` (
+`Yht_ID` int(11) NOT NULL,
+`VRL` int(5) UNSIGNED ZEROFILL NOT NULL,
+`Alue_ID` int(11) NOT NULL,
+`Paatoimisuus` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Rakenne taululle `Hevonen`
+--
+
+CREATE TABLE `Hevonen` (
+`VH` varchar(13) NOT NULL,
+`Nimi` varchar(200) NOT NULL,
+`Rotu` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Rakenne taululle `Keikkatuomari`
+--
+
+CREATE TABLE `Keikkatuomari` (
+`Rivi_ID` int(11) NOT NULL,
+`VRL` int(5) UNSIGNED ZEROFILL NOT NULL,
+`Sahkoposti` varchar(100) NOT NULL,
+`Til_ID` int(11) NOT NULL,
+`Alueet` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Rakenne taululle `Osallistuminen`
+--
+
+CREATE TABLE `Osallistuminen` (
+`Os_ID` int(11) NOT NULL,
+`VH` varchar(13) NOT NULL,
+`VRL` int(5) UNSIGNED ZEROFILL NOT NULL,
+`Til_ID` int(11) NOT NULL,
+`Linkki` varchar(400) NOT NULL,
+`Skp` varchar(1) NOT NULL,
+`Varahevonen` int(1) NOT NULL,
+`Poikkeukset` varchar(500) DEFAULT NULL,
+`Pisteet` DECIMAL(10,2) DEFAULT NULL,
+`Palkinto` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Rakenne taululle `Tilaisuus`
+--
+
+CREATE TABLE `Tilaisuus` (
+`Til_ID` int(11) NOT NULL,
+`Otsikko` varchar(200) DEFAULT NULL,
+`Pvm` date DEFAULT NULL,
+`IlmoAlku` date DEFAULT NULL,
+`IlmoLoppu` date DEFAULT NULL,
+`Maxos` int(11) DEFAULT NULL,
+`Osallistujia` varchar(100) DEFAULT NULL,
+`Tulokset` varchar(500) DEFAULT NULL,
+`Valmis` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Rakenne taululle `TuomareidenTauot`
+--
+
+CREATE TABLE `TuomareidenTauot` (
+`Rivi_ID` int(11) NOT NULL,
+`Alku` date NOT NULL,
+`Loppu` date DEFAULT NULL,
+`VRL` int(5) UNSIGNED ZEROFILL NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Rakenne taululle `Tuomari`
+--
+
+CREATE TABLE `Tuomari` (
+`VRL` int(5) UNSIGNED ZEROFILL NOT NULL,
+`Nimimerkki` varchar(100) NOT NULL,
+`Sahkoposti` varchar(300) DEFAULT NULL,
+`Yllapitaja` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `Alue`
+--
+ALTER TABLE `Alue`
+ADD PRIMARY KEY (`Alue_ID`);
+
+--
+-- Indexes for table `AlueidenTuomarit`
+--
+ALTER TABLE `AlueidenTuomarit`
+ADD PRIMARY KEY (`Yht_ID`),
+ADD KEY `VRL` (`VRL`),
+ADD KEY `Alue_ID` (`Alue_ID`);
+
+--
+-- Indexes for table `Hevonen`
+--
+ALTER TABLE `Hevonen`
+ADD PRIMARY KEY (`VH`);
+
+--
+-- Indexes for table `Keikkatuomari`
+--
+ALTER TABLE `Keikkatuomari`
+ADD PRIMARY KEY (`Rivi_ID`);
+
+--
+-- Indexes for table `Osallistuminen`
+--
+ALTER TABLE `Osallistuminen`
+ADD PRIMARY KEY (`Os_ID`),
+ADD KEY `VH` (`VH`),
+ADD KEY `Til_ID` (`Til_ID`);
+
+--
+-- Indexes for table `Tilaisuus`
+--
+ALTER TABLE `Tilaisuus`
+ADD PRIMARY KEY (`Til_ID`);
+
+--
+-- Indexes for table `TuomareidenTauot`
+--
+ALTER TABLE `TuomareidenTauot`
+ADD PRIMARY KEY (`Rivi_ID`),
+ADD KEY `VRL` (`VRL`);
+
+--
+-- Indexes for table `Tuomari`
+--
+ALTER TABLE `Tuomari`
+ADD PRIMARY KEY (`VRL`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `Alue`
+--
+ALTER TABLE `Alue`
+MODIFY `Alue_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `AlueidenTuomarit`
+--
+ALTER TABLE `AlueidenTuomarit`
+MODIFY `Yht_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `Keikkatuomari`
+--
+ALTER TABLE `Keikkatuomari`
+MODIFY `Rivi_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `Osallistuminen`
+--
+ALTER TABLE `Osallistuminen`
+MODIFY `Os_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `Tilaisuus`
+--
+ALTER TABLE `Tilaisuus`
+MODIFY `Til_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `TuomareidenTauot`
+--
+ALTER TABLE `TuomareidenTauot`
+MODIFY `Rivi_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Rajoitteet vedostauluille
+--
+
+--
+-- Rajoitteet taululle `AlueidenTuomarit`
+--
+ALTER TABLE `AlueidenTuomarit`
+ADD CONSTRAINT `AlueidenTuomarit_ibfk_1` FOREIGN KEY (`VRL`) REFERENCES `Tuomari` (`VRL`),
+ADD CONSTRAINT `AlueidenTuomarit_ibfk_2` FOREIGN KEY (`Alue_ID`) REFERENCES `Alue` (`Alue_ID`);
+
+--
+-- Rajoitteet taululle `TuomareidenTauot`
+--
+ALTER TABLE `TuomareidenTauot`
+ADD CONSTRAINT `TuomareidenTauot_ibfk_1` FOREIGN KEY (`VRL`) REFERENCES `Tuomari` (`VRL`);
+COMMIT;

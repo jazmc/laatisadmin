@@ -1,0 +1,172 @@
+@charset "UTF-8";
+
+tr.ots-dark td {
+    background-image: linear-gradient(
+        rgba(128 157 201 / 27%),
+        rgba(17 76 163 / 28%)
+    );
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #809dc945),
+        color-stop(1, #114ca347)
+    );
+    font-weight: bold;
+    color: #2b2b2b;
+}
+
+.modal-body {
+    overflow-x: hidden;
+    padding: 1.1rem;
+}
+
+.bg-success-subtle {
+    background-color: #d1e7dd;
+}
+.bg-warning-subtle {
+    background-color: #fff3cd;
+}
+.bg-danger-subtle {
+    background-color: #f8d7da;
+}
+.bg-info-subtle {
+    background-color: #cff4fc;
+}
+.bg-primary-subtle {
+    background-color: #cfe2ff;
+}
+.bg-secondary-subtle {
+    background-color: #e2e3e5;
+}
+
+.slided {
+    transform: translateX(-2em);
+    transition: all.5s;
+}
+.toast {
+    min-width: 15rem;
+}
+
+h2[data-toggle="collapse"] {
+    cursor: pointer;
+}
+
+#tulosarkisto tr > td:not([colspan]):last-child {
+    text-align: right;
+}
+
+.btn-outline-warning:disabled {
+    color: #dcc37a;
+    border-color: #dcc37a;
+}
+
+.modal-dialog {
+    max-width: 800px;
+}
+
+ol ul > li {
+    list-style-type: circle;
+}
+
+/* Alkuperäisen ulkoasun modaukset feikkilaatista varten */
+/* Voit huoletta poistaa kaiken tämän kommentin alla olevan */
+
+@font-face {
+    font-family: "Graced Script";
+    src: url("/ldbutik/ulkka/GracedScript_PersonalUseOnly.ttf")
+        format("truetype");
+}
+
+/* teeman RGB-lukuarvot */
+:root {
+    --dark-primary: 65, 88, 96;
+    --light-primary: 113, 133, 142;
+    --lightest-primary: 210, 223, 230;
+    --dark-secondary: 217, 127, 99;
+    --light-secondary: 238, 177, 132;
+    --accent: 136, 124, 91;
+}
+
+html,
+body {
+    background: url(/virtuaaliapu/laatisadmin/assets/tausta.jpg);
+}
+#sisalto {
+    background: url(/virtuaaliapu/laatisadmin/assets/feikkilaatisotsikkokuva.jpg)
+        no-repeat rgba(255, 255, 255, 0.6);
+}
+
+#otsikko,
+th {
+    background-image: linear-gradient(
+        top,
+        rgba(var(--light-primary), 1),
+        rgba(var(--dark-primary), 1)
+    );
+    background-image: -o-linear-gradient(
+        top,
+        rgba(var(--light-primary), 1),
+        rgba(var(--dark-primary), 1)
+    );
+    background-image: -moz-linear-gradient(
+        top,
+        rgba(var(--light-primary), 1),
+        rgba(var(--dark-primary), 1)
+    );
+    background-image: -webkit-linear-gradient(
+        top,
+        rgba(var(--light-primary), 1),
+        rgba(var(--dark-primary), 1)
+    );
+    background-image: -ms-linear-gradient(
+        top,
+        rgba(var(--light-primary), 1),
+        rgba(var(--dark-primary), 1)
+    );
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0%, rgba(var(--light-primary), 1)),
+        color-stop(100%, rgba(var(--dark-primary), 1))
+    );
+}
+
+#alaotsikko {
+    color: rgba(var(--lightest-primary), 1);
+}
+
+#linkit ul li a {
+    color: rgba(var(--light-primary), 1);
+}
+#linkit ul li a:hover {
+    color: rgba(var(--dark-primary), 1);
+}
+#linkit ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+a:link,
+a:active,
+a:visited {
+    color: rgba(var(--dark-secondary), 1);
+}
+a:hover {
+    color: rgba(var(--light-secondary), 1);
+}
+
+h1,
+strong,
+b {
+    color: rgba(var(--dark-primary), 1);
+}
+h2 {
+    color: rgba(var(--accent), 1);
+}
+
+.jassuallek {
+    font-family: "Graced Script", cursive;
+    color: rgba(var(--accent), 1);
+}
