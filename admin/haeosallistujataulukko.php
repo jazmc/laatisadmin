@@ -40,8 +40,8 @@ function haeOsallistujataulukko($tiettytilaisuus = '0', $admintaulukko = false)
 
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $tilsu = $conn->prepare("SELECT T.*, COUNT(O.Os_ID) as Oslkm, COUNT(IF(Varahevonen='1', 1, NULL)) as Varahevosia FROM Osallistuminen O 
-	JOIN Tilaisuus T ON T.Til_ID = O.Til_ID 
+        $tilsu = $conn->prepare("SELECT T.*, COUNT(O.Os_ID) as Oslkm, COUNT(IF(Varahevonen='1', 1, NULL)) as Varahevosia FROM Tilaisuus T
+	LEFT JOIN Osallistuminen O ON T.Til_ID = O.Til_ID 
     WHERE T.Til_ID >= '$tiettytilaisuus' 
     GROUP BY T.Til_ID
     ORDER BY T.Pvm DESC;");
@@ -66,7 +66,7 @@ function haeOsallistujataulukko($tiettytilaisuus = '0', $admintaulukko = false)
             return;
         }
 
-        if (empty($til)) {
+        if (empty($til) && ($tiettytilaisuus == 0 || $tiettytilaisuus == "")) {
             echo "<table><tr><td colspan=\"" . (!$admintaulukko ? "4" : "5") . "\">Ei tiedossa olevaa seuraavaa tilaisuutta</td></tr></table>";
             return;
         }
