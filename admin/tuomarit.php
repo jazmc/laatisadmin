@@ -21,22 +21,25 @@ require_once "../header.php";
         <?php
         try {
 
-            $stmt = $conn->prepare("SELECT t.Sahkoposti, tt.Rivi_ID, tt.Alku, tt.Loppu, 
+            $stmt = $conn->prepare("SELECT a.Paatoimisuus, t.Sahkoposti, tt.Rivi_ID, tt.Alku, tt.Loppu, 
 (CASE
   WHEN (Alku <= CURRENT_DATE AND (Loppu IS NULL OR Loppu >= CURRENT_DATE)) THEN '1'
   ELSE '0'
 END) as Taukoilee
 FROM Tuomari t
 LEFT JOIN TuomareidenTauot AS tt ON tt.VRL = t.VRL
-WHERE
-   tt.Rivi_ID = (
+LEFT JOIN AlueidenTuomarit a ON a.VRL = t.VRL
+WHERE a.Paatoimisuus = '1'
+AND 
+   (tt.Rivi_ID = (
       SELECT Rivi_ID
       FROM TuomareidenTauot
       WHERE VRL = t.VRL
        AND Alku <= CURRENT_DATE 
 	ORDER BY Alku DESC, Rivi_ID DESC
       LIMIT 1
-   ) OR tt.Rivi_ID IS NULL;");
+   ) OR tt.Rivi_ID IS NULL)
+   GROUP BY t.VRL;");
             $stmt->execute();
             $tuoms = $stmt->fetchAll();
             $tuomarit = array();
