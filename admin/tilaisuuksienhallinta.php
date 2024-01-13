@@ -7,7 +7,7 @@ $osallistujia = 0;
 $uploaded = false;
 
 include 'haeosallistujataulukko.php';
-require_once("../header.php");
+require_once("../" . $headerurl);
 ?>
 <?php include 'adminlinkit.php'; ?>
 
@@ -510,4 +510,4 @@ ORDER BY t.Pvm DESC");
 
 $conn = null;
 
-require_once '../footer.php'; ?>
+require_once "../" . $footerurl; ?>
