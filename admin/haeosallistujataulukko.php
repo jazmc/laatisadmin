@@ -62,12 +62,19 @@ function haeOsallistujataulukko($tiettytilaisuus = '0', $admintaulukko = false)
 
         // jos tilaisuus on valmis, älä tulosta taulukkoa
         if (!$admintaulukko && !empty($til) && $til['Tulokset'] != NULL) {
-            echo "<table><tr><td colspan=\"" . (!$admintaulukko ? "4" : "5") . "\">Tilaisuuden tulokset tulleet</td></tr></table>";
+            echo "<table";
+            echo (!$admintaulukko ? "class=\"mt-4\"" : " style=\"margin-top:0;\"");
+            echo "><tr><td colspan=\"" . (!$admintaulukko ? "4" : "5") . "\">Tilaisuuden tulokset tulleet</td></tr></table>";
             return;
-        }
-
-        if (empty($til) && ($tiettytilaisuus == 0 || $tiettytilaisuus == "")) {
-            echo "<table><tr><td colspan=\"" . (!$admintaulukko ? "4" : "5") . "\">Ei tiedossa olevaa seuraavaa tilaisuutta</td></tr></table>";
+        } else if (empty($til) && ($tiettytilaisuus == 0 || $tiettytilaisuus == "")) {
+            echo "<table";
+            echo (!$admintaulukko ? "class=\"mt-4\"" : " style=\"margin-top:0;\"");
+            echo "><tr><td colspan=\"" . (!$admintaulukko ? "4" : "5") . "\">Ei tiedossa olevaa seuraavaa tilaisuutta</td></tr></table>";
+            return;
+        } else if (empty($til)) {
+            echo "<table";
+            echo (!$admintaulukko ? "class=\"mt-4\"" : " style=\"margin-top:0;\"");
+            echo "><tr><td colspan=\"" . (!$admintaulukko ? "4" : "5") . "\">Ei osallistujia</td></tr></table>";
             return;
         }
 
