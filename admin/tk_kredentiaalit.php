@@ -29,6 +29,11 @@ $laatispalkinnot =
 
 // ----------------------------------------------------
 
+// headerin tiedostonimi
+$headerurl = 'header.php';
+// footerin tiedostonimi
+$footerurl = 'footer.php';
+
 // linkeissä ja php-koodeissa käytettyjä osoitteita yms
 $domain = "https://hiirenkolo.net/virtuaaliapu/laatisadmin/";
 $tilaisuussivu = "https://hiirenkolo.net/virtuaaliapu/laatisadmin/tilaisuudet.php";
