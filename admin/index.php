@@ -9,15 +9,16 @@ $osallistujia = 0;
 $uploaded = false;
 $tuoms = array();
 
-
+require_once 'tk_kredentiaalit.php';
 require_once("../" . $headerurl);
 ?>
 <?php include 'adminlinkit.php'; ?>
 
 <h1>Osioiden hallinta</h1>
-<p>Muuta osioiden järjestystä nuolipainikkeista. Osiot näytetään valitussa järjestyksessä tuomaritaulukossa ja
-    lomakkeissa. Tallentaminen päivittää sivun hetken kuluttua.</p>
-<?php if (!empty($_SESSION['koodi']) && $_SESSION['koodi'] === $koodi) {
+<?php if (!empty($_SESSION['koodi']) && $_SESSION['koodi'] === $koodi) { ?>
+    <p>Muuta osioiden järjestystä nuolipainikkeista. Osiot näytetään valitussa järjestyksessä tuomaritaulukossa ja
+        lomakkeissa. Tallentaminen päivittää sivun hetken kuluttua.</p>
+    <?php
 
     try {
 

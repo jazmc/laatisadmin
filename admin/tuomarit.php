@@ -9,7 +9,7 @@ $osallistujia = 0;
 $uploaded = false;
 $tuoms = array();
 
-
+require_once 'tk_kredentiaalit.php';
 require_once "../" . $headerurl;
 ?>
 <?php include 'adminlinkit.php'; ?>

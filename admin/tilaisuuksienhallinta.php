@@ -7,6 +7,7 @@ $osallistujia = 0;
 $uploaded = false;
 
 include 'haeosallistujataulukko.php';
+require_once 'tk_kredentiaalit.php';
 require_once("../" . $headerurl);
 ?>
 <?php include 'adminlinkit.php'; ?>
