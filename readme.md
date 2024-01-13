@@ -17,12 +17,12 @@ _Voit yrittää upottaa laatiksesi sivujen sisällön näiden geneeristen pohjie
 
 ```html
 <?php // header-include
-require_once "header.php"; ?>
+require_once $headerurl; ?>
 
 <!-- sivun muu sisältö tähän -->
 
 <?php // footer-include
-require_once "footer.php"; ?>
+require_once $footerurl; ?>
 ```
 
 </details>
@@ -32,7 +32,7 @@ require_once "footer.php"; ?>
 
 ```html
 <?php // header-include
-require_once "header.php"; ?>
+require_once $headerurl; ?>
 
 <h1>Tärkeää tietoa</h1>
 <!-- (Sivun leipäteksti tähän) -->
@@ -58,7 +58,7 @@ require_once "header.php"; ?>
 <?php include_once 'admin/keikkatuomarilomake.php'; ?>
 
 <?php // footer-include
-require_once "footer.php"; ?>
+require_once $footerurl; ?>
 ```
 
 </details>
@@ -68,7 +68,7 @@ require_once "footer.php"; ?>
 
 ```html
 <?php // header + tarvittavat tiedostot
-require_once "header.php";
+require_once $headerurl;
 require 'admin/haeosallistujataulukko.php';
 require 'admin/haetulokset.php'; ?>
 
@@ -107,7 +107,7 @@ require 'admin/haetulokset.php'; ?>
 </table>
 
 <?php // footer-include
-require_once 'footer.php'; ?>
+require_once $footerurl; ?>
 ```
 
 </details>
@@ -117,7 +117,7 @@ require_once 'footer.php'; ?>
 
 ```html
 <?php // header-include
-require_once "header.php"; ?>
+require_once $headerurl; ?>
 
 <h1>Palkitut</h1>
 <!-- sivun leipäteksti -->
@@ -161,7 +161,7 @@ try {
 <!-- Palkitut hevoset loppuu -->
 
 <?php // footer-include
-require_once 'footer.php'; ?>
+require_once $footerurl; ?>
 
 ```
 
