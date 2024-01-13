@@ -17,6 +17,7 @@ _Voit yrittää upottaa laatiksesi sivujen sisällön näiden geneeristen pohjie
 
 ```html
 <?php // header-include
+require_once 'admin/tk_kredentiaalit.php';
 require_once $headerurl; ?>
 
 <!-- sivun muu sisältö tähän -->
@@ -32,6 +33,7 @@ require_once $footerurl; ?>
 
 ```html
 <?php // header-include
+require_once 'admin/tk_kredentiaalit.php';
 require_once $headerurl; ?>
 
 <h1>Tärkeää tietoa</h1>
@@ -68,6 +70,7 @@ require_once $footerurl; ?>
 
 ```html
 <?php // header + tarvittavat tiedostot
+require_once 'admin/tk_kredentiaalit.php';
 require_once $headerurl;
 require 'admin/haeosallistujataulukko.php';
 require 'admin/haetulokset.php'; ?>
@@ -117,6 +120,7 @@ require_once $footerurl; ?>
 
 ```html
 <?php // header-include
+require_once 'admin/tk_kredentiaalit.php';
 require_once $headerurl; ?>
 
 <h1>Palkitut</h1>
