@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('Europe/Helsinki');
+
 // tietokannan kredentiaalit, vaihda omasi
 $servername = "localhost"; // <-- tuskin tarvii vaihtaa
 $username = ""; // mysql-käyttäjänimi
