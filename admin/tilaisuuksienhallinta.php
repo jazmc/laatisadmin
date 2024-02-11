@@ -9,17 +9,14 @@ $uploaded = false;
 include 'haeosallistujataulukko.php';
 require_once 'tk_kredentiaalit.php';
 require_once("../" . $headerurl);
-?>
-<?php include 'adminlinkit.php'; ?>
+?> <?php include 'adminlinkit.php'; ?>
 
-<h1>Tilaisuuksien hallinta</h1>
-<?php if (!empty($_SESSION['koodi']) && $_SESSION['koodi'] === $koodi) { ?>
+<h1>Tilaisuuksien hallinta</h1> <?php if (!empty($_SESSION['koodi']) && $_SESSION['koodi'] === $koodi) { ?>
 
-    <hr />
+<hr />
 
-    <h2 data-toggle="collapse" data-target="#lahetac" aria-expanded="false" aria-controls="lahetac"> Lähetä tilaisuuden
-        tulokset <i class="fas fa-caret-down"></i></h2>
-    <?php
+<h2 data-toggle="collapse" data-target="#lahetac" aria-expanded="false" aria-controls="lahetac"> Lähetä tilaisuuden
+    tulokset <i class="fas fa-caret-down"></i></h2> <?php
     error_reporting(E_ALL);
 
     // Check if image file is a actual image or fake image
@@ -103,18 +100,16 @@ require_once("../" . $headerurl);
             }
         }
     }
-    ?>
-    <div class="collapse mt-4" id="lahetac">
-        <p>Voit lisätä LaatisAdminin kautta tilaisuudelle tulos-pdf:n kahdella eri tavalla. Jos tiedostoa ei ole vielä
-            ladattu internetiin, voit tehdä sen tämän lomakkeen avulla. Jos tiedosto on jo netissä, voit linkittää
-            tulos-pdf:n URL-osoitteen tilaisuuteen <a href="#tuloksettomat">Tuloksettomat tilaisuudet</a>-otsikon alta
-            muokkaamalla kyseistä tilaisuutta.</p>
-        <form id="pdfform" class="form mt-4 mb-5" method="POST" enctype="multipart/form-data">
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="tilaisuusi">Tilaisuus</label>
-                <div class="col">
-                    <select class="custom-select" name="tilaisuus" id="tilaisuusi" required>
-                        <?php
+    ?> <div class="collapse mt-4" id="lahetac">
+    <p>Voit lisätä LaatisAdminin kautta tilaisuudelle tulos-pdf:n kahdella eri tavalla. Jos tiedostoa ei ole vielä
+        ladattu internetiin, voit tehdä sen tämän lomakkeen avulla. Jos tiedosto on jo netissä, voit linkittää
+        tulos-pdf:n URL-osoitteen tilaisuuteen <a href="#tuloksettomat">Tuloksettomat tilaisuudet</a>-otsikon alta
+        muokkaamalla kyseistä tilaisuutta.</p>
+    <form id="pdfform" class="form mt-4 mb-5" method="POST" enctype="multipart/form-data">
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="tilaisuusi">Tilaisuus</label>
+            <div class="col">
+                <select class="custom-select" name="tilaisuus" id="tilaisuusi" required> <?php
 
                         try {
                             $stmt = $conn->prepare("SELECT * FROM Tilaisuus 
@@ -137,47 +132,45 @@ require_once("../" . $headerurl);
                         }
 
 
-                        ?>
-                    </select>
-                </div>
+                        ?> </select>
             </div>
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="osi">Osallistujien lkm</label>
-                <div class="col">
-                    <input type="text" name="osallistujia" id="osi" class="form-control" placeholder="Osallistujien lkm"
-                        required aria-describedby="passwordHelpBlock">
-                    <small id="passwordHelpBlock" class="form-text text-muted"> Voit määrittää osallistujamäärän laatiksesi
-                        haluamalla tavalla. Lomake hyväksyy tekstiä ja numeroita. Esim. <code>20 + 3</code> tai
-                        <code>23</code>
-                    </small>
-                </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="osi">Osallistujien lkm</label>
+            <div class="col">
+                <input type="text" name="osallistujia" id="osi" class="form-control" placeholder="Osallistujien lkm"
+                    required aria-describedby="passwordHelpBlock">
+                <small id="passwordHelpBlock" class="form-text text-muted"> Voit määrittää osallistujamäärän laatiksesi
+                    haluamalla tavalla. Lomake hyväksyy tekstiä ja numeroita. Esim. <code>20 + 3</code> tai
+                    <code>23</code>
+                </small>
             </div>
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label" for="pdfi">Tulosten pdf-tiedosto</label>
-                <div class="col">
-                    <input type="file" id="pdfi" name="pdf" size="50" required />
-                </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" for="pdfi">Tulosten pdf-tiedosto</label>
+            <div class="col">
+                <input type="file" id="pdfi" name="pdf" size="50" required />
             </div>
-            <div class="mb-3">
-                <label for="pdfpisteet">Osallistujakohtaiset tulokset: <code>VH;PISTEET;PALKINTO;KOMMENTTI</code> tai
-                    <code>VH;PISTEET;PALKINTO;ROTU-SKP;NIMI;LINKKI;POIKKEUKSET</code></label>
-                <textarea class="form-control" id="pdfpisteet"
-                    placeholder="VH;PISTEET;PALKINTO;ROTU-SKP;NIMI;LINKKI;POIKKEUKSET" required></textarea>
-                <div class="invalid-feedback"> Jokin tekstikentän tiedoista ei ole muotoonlaitettu oikein. Tarkista tiedot.
-                </div>
-                <small class="form-text text-muted">Syötä tähän Google Sheetsistä muotoonlaitetut osallistujarivit, niin
-                    järjestelmä parsii tietojen joukosta pisteet ja palkinnot. Ei ole väliä, kummassa muodossa laitat
-                    pisteet. Jos Sheetsissä on arvosteltu hevosia jotka eivät ilmoittautuneet tilaisuuteen tietokannan
-                    kautta, lisääthän ne ensin <a href="#lisaapuuttuvia">Lisää puuttuvia osallistujia</a>-lomakkeen
-                    avulla!</small>
+        </div>
+        <div class="mb-3">
+            <label for="pdfpisteet">Osallistujakohtaiset tulokset: <code>VH;PISTEET;PALKINTO;KOMMENTTI</code> tai
+                <code>VH;PISTEET;PALKINTO;ROTU-SKP;NIMI;LINKKI;POIKKEUKSET</code></label>
+            <textarea class="form-control" id="pdfpisteet"
+                placeholder="VH;PISTEET;PALKINTO;ROTU-SKP;NIMI;LINKKI;POIKKEUKSET" required></textarea>
+            <div class="invalid-feedback"> Jokin tekstikentän tiedoista ei ole muotoonlaitettu oikein. Tarkista tiedot.
             </div>
-            <button id="lataapdf" class="btn btn-success" onclick="lataaPdf()" disabled>Lataa tulokset palvelimelle</button>
-        </form>
+            <small class="form-text text-muted">Syötä tähän Google Sheetsistä muotoonlaitetut osallistujarivit, niin
+                järjestelmä parsii tietojen joukosta pisteet ja palkinnot. Ei ole väliä, kummassa muodossa laitat
+                pisteet. Jos Sheetsissä on arvosteltu hevosia jotka eivät ilmoittautuneet tilaisuuteen tietokannan
+                kautta, lisääthän ne ensin <a href="#lisaapuuttuvia">Lisää puuttuvia osallistujia</a>-lomakkeen
+                avulla!</small>
+        </div>
+        <button id="lataapdf" class="btn btn-success" onclick="lataaPdf()" disabled>Lataa tulokset palvelimelle</button>
+    </form>
 
-        <h2>Muista myös tarkistaa keikkatuomarit:</h2>
-        <p>Poista ne jotka eivät hoitaneet tuomarointeja määräaikaan mennessä, jotta he eivät saa tuomarioikeuksia turhaan.
-            Näytetään keikkatuomarit, joiden tilaisuus ei ole vielä valmis, tai on merkitty valmiiksi alle 1 kk sitten.</p>
-        <?php
+    <h2>Muista myös tarkistaa keikkatuomarit:</h2>
+    <p>Poista ne jotka eivät hoitaneet tuomarointeja määräaikaan mennessä, jotta he eivät saa tuomarioikeuksia turhaan.
+        Näytetään keikkatuomarit, joiden tilaisuus ei ole vielä valmis, tai on merkitty valmiiksi alle 1 kk sitten.</p> <?php
         // keikkatuomarit, 20 uusinta joiden tuomaroima tilaisuus on alle kk vanha
     
         if ($conn) {
@@ -218,94 +211,91 @@ ORDER BY kt.Til_ID ASC LIMIT 20");
                 echo "<button type=\"button\" class=\"mx-2 my-2 btn btn-sm btn-danger\" onclick=\"poistaKeikkatuomari(" . $kt['Rivi_ID'] . ");\">poista tuomarioikeudet</button> ( $aluerimpsu)<br>";
             }
         } ?>
+</div>
+
+<hr />
+
+<h2 id="alustauusi" data-toggle="collapse" data-target="#lisaac" aria-expanded="false" aria-controls="lisaac"> Alusta
+    uusi tilaisuus <i class="fas fa-caret-down"></i></h2>
+<div class="collapse mt-4" id="lisaac">
+    <div class="row">
+        <label class="col-sm-2 col-form-label" for="til-otsikko">Otsikko</label>
+        <div class="col input-group">
+            <input type="text" id="til-otsikko" name="otsikko" class="form-control" placeholder="(ei pakollinen)"
+                aria-label="otsikko" aria-describedby="otsikkosel">
+        </div>
+        <label class="col-sm-2 col-form-label" for="til-maxos">Osallistujia (max)</label>
+        <div class="col input-group">
+            <input type="number" id="til-maxos" name="til-maxos" class="form-control" aria-label="max-os"
+                value="<?php echo $oletus_osallistujamaara; ?>" required>
+        </div>
     </div>
-
-    <hr />
-
-    <h2 id="alustauusi" data-toggle="collapse" data-target="#lisaac" aria-expanded="false" aria-controls="lisaac"> Alusta
-        uusi tilaisuus <i class="fas fa-caret-down"></i></h2>
-    <div class="collapse mt-4" id="lisaac">
-        <div class="row">
-            <label class="col-sm-2 col-form-label" for="til-otsikko">Otsikko</label>
-            <div class="col input-group">
-                <input type="text" id="til-otsikko" name="otsikko" class="form-control" placeholder="(ei pakollinen)"
-                    aria-label="otsikko" aria-describedby="otsikkosel">
-            </div>
-            <label class="col-sm-2 col-form-label" for="til-maxos">Osallistujia (max)</label>
-            <div class="col input-group">
-                <input type="number" id="til-maxos" name="til-maxos" class="form-control" aria-label="max-os"
-                    value="<?php echo $oletus_osallistujamaara; ?>" required>
-            </div>
+    <div class="row mb-2">
+        <div class="col-sm-2">
         </div>
-        <div class="row mb-2">
-            <div class="col-sm-2">
-            </div>
-            <div class="col input-group">
-                <small id="otsikkosel" class="form-text text-muted"> Jos jätät otsikon tyhjäksi, tilaisuus otsikoidaan
-                    päivämäärän perusteella esimerkiksi "Elokuun tilaisuus". Syötä otsikko vain, jos haluat sen olevan
-                    jotain muuta. </small>
-            </div>
+        <div class="col input-group">
+            <small id="otsikkosel" class="form-text text-muted"> Jos jätät otsikon tyhjäksi, tilaisuus otsikoidaan
+                päivämäärän perusteella esimerkiksi "Elokuun tilaisuus". Syötä otsikko vain, jos haluat sen olevan
+                jotain muuta. </small>
         </div>
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-label" for="til-pvm">Päivämäärät</label>
-            <div class="col input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-calendar-day" data-toggle="tooltip" data-placement="top"
-                            title="Tilaisuuden päivämäärä"></i></span>
-                </div>
-                <input type="date" class="form-control" id="til-pvm" required />
-            </div>
-            <div class="col-sm-3 input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-hourglass-start" data-toggle="tooltip"
-                            data-placement="top" title="Ilmoittautuminen alkaa"></i></span>
-                </div>
-                <input type="date" class="form-control" id="til-ilmo" required />
-            </div>
-            <div class="col-sm-3 input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" data-toggle="tooltip" data-placement="top"
-                        title="Viimeinen ilmoittautumispäivä">VIP</span>
-                </div>
-                <input type="date" class="form-control" id="til-vip" required />
-            </div>
-        </div>
-        <input class="btn btn-success" id="alustatilaisuus" type="button" value="Alusta tilaisuus"
-            onclick="alustaTilaisuus()" disabled />
     </div>
+    <div class="row mb-3">
+        <label class="col-sm-2 col-form-label" for="til-pvm">Päivämäärät</label>
+        <div class="col input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-calendar-day" data-toggle="tooltip" data-placement="top"
+                        title="Tilaisuuden päivämäärä"></i></span>
+            </div>
+            <input type="date" class="form-control" id="til-pvm" required />
+        </div>
+        <div class="col-sm-3 input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-hourglass-start" data-toggle="tooltip"
+                        data-placement="top" title="Ilmoittautuminen alkaa"></i></span>
+            </div>
+            <input type="date" class="form-control" id="til-ilmo" required />
+        </div>
+        <div class="col-sm-3 input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" data-toggle="tooltip" data-placement="top"
+                    title="Viimeinen ilmoittautumispäivä">VIP</span>
+            </div>
+            <input type="date" class="form-control" id="til-vip" required />
+        </div>
+    </div>
+    <input class="btn btn-success" id="alustatilaisuus" type="button" value="Alusta tilaisuus"
+        onclick="alustaTilaisuus()" disabled />
+</div>
 
-    <hr />
+<hr />
 
-    <h2 id="lisaapuuttuvia" data-toggle="collapse" data-target="#lisaaos" aria-expanded="false" aria-controls="lisaaos">
-        Lisää puuttuvia osallistujia / lähetä arkistotulokset <i class="fas fa-caret-down"></i>
-    </h2>
-    <?php if (!empty($_SESSION['Epaonnistuneet']) && count($_SESSION['Epaonnistuneet']['epaonnistuneet']) > 0) {
+<h2 id="lisaapuuttuvia" data-toggle="collapse" data-target="#lisaaos" aria-expanded="false" aria-controls="lisaaos">
+    Lisää puuttuvia osallistujia / lähetä arkistotulokset <i class="fas fa-caret-down"></i>
+</h2> <?php if (!empty($_SESSION['Epaonnistuneet']) && count($_SESSION['Epaonnistuneet']['epaonnistuneet']) > 0) {
         echo '<p class="text-danger lead">Vähintään yhden hevosen tietojen lähetys epäonnistui [ ' . $_SESSION['Epaonnistuneet']['klo'] . ' ].<br>Epäonnistuneet rivit alapuolella:</p>';
         echo "<p class=\"text-danger\">";
         foreach ($_SESSION['Epaonnistuneet']['epaonnistuneet'] as $rivi) {
             echo $rivi . "<br>";
         }
         echo "</p>";
-    } ?>
-    <div class="collapse mt-4" id="lisaaos">
-        <p>Jos tilaisuudessa on arvosteltu "tietokannan ulkopuolisia" hevosia jotka on vain lisätty suoraan Google Sheetsiin
-            arvosteltaviksi, saat niiden tiedot, palkinnot ja pisteet tietokantaan käyttämällä tätä lomaketta. Voit syöttää
-            hevosten tiedot kohta kerrallaan jolloin lomake muotoonlaittaa tiedot puolestasi, tai lisätä kaikki tiedot
-            "massalisäyksenä" tekstikenttään Sheetsin LaatisAdmin-muotoonlaittovälilehden muodon
-            mukaisesti:<br><code>VH;PISTEET;PALKINTO;ROTU-SKP;NIMI;LINKKI;POIKKEUKSET</code> <small class="ml-2">(huom:
-                rodun ja sukupuolen välissä on viiva eikä puolipiste.)</small></p>
-        <p>Jos pisteitä ja palkintoja ei ole vielä tiedossa ja syötät hevosen tietoja peruslomakkeella, <b>jätä kentät
-                tyhjäksi</b>.</p>
-        <p>Tätä lomaketta voi myös hyödyntää, kun halutaan syöttää vanhojen tilaisuuksien tuloksia tietokantaan, sillä
-            lomake antaa lisätä tietoja kaikille tietokantaan alustetuille tilaisuuksille huolimatta niiden päivämäärästä.
-            Järjestelmä lisää tai päivittää hevosen ja osallistumisen kaikki annetut tiedot. <span class="text-danger">Ole
-                tarkkana että valitset oikean tilaisuuden valikosta!</span></p>
-        <p class="lead">Syötä tiedot kenttiin ja siirrä, tai kirjoita tiedot muotoonlaitettuna suoraan tekstikenttään:</p>
-        <div id="jalkiilmoform">
-            <div class="row">
-                <div class="col-3 form-group" style="min-width: 11em;">
-                    <select class="form-control kriittinen" name="tilid" id="jalk-tilid" required>
-                        <?php
+    } ?> <div class="collapse mt-4" id="lisaaos">
+    <p>Jos tilaisuudessa on arvosteltu "tietokannan ulkopuolisia" hevosia jotka on vain lisätty suoraan Google Sheetsiin
+        arvosteltaviksi, saat niiden tiedot, palkinnot ja pisteet tietokantaan käyttämällä tätä lomaketta. Voit syöttää
+        hevosten tiedot kohta kerrallaan jolloin lomake muotoonlaittaa tiedot puolestasi, tai lisätä kaikki tiedot
+        "massalisäyksenä" tekstikenttään Sheetsin LaatisAdmin-muotoonlaittovälilehden muodon
+        mukaisesti:<br><code>VH;PISTEET;PALKINTO;ROTU-SKP;NIMI;LINKKI;POIKKEUKSET</code> <small class="ml-2">(huom:
+            rodun ja sukupuolen välissä on viiva eikä puolipiste.)</small></p>
+    <p>Jos pisteitä ja palkintoja ei ole vielä tiedossa ja syötät hevosen tietoja peruslomakkeella, <b>jätä kentät
+            tyhjäksi</b>.</p>
+    <p>Tätä lomaketta voi myös hyödyntää, kun halutaan syöttää vanhojen tilaisuuksien tuloksia tietokantaan, sillä
+        lomake antaa lisätä tietoja kaikille tietokantaan alustetuille tilaisuuksille huolimatta niiden päivämäärästä.
+        Järjestelmä lisää tai päivittää hevosen ja osallistumisen kaikki annetut tiedot. <span class="text-danger">Ole
+            tarkkana että valitset oikean tilaisuuden valikosta!</span></p>
+    <p class="lead">Syötä tiedot kenttiin ja siirrä, tai kirjoita tiedot muotoonlaitettuna suoraan tekstikenttään:</p>
+    <div id="jalkiilmoform">
+        <div class="row">
+            <div class="col-3 form-group" style="min-width: 11em;">
+                <select class="form-control kriittinen" name="tilid" id="jalk-tilid" required> <?php
                         try {
 
                             $stmt = $conn->prepare("SELECT * FROM Tilaisuus
@@ -331,76 +321,74 @@ ORDER BY kt.Til_ID ASC LIMIT 20");
                             echo "<option value=\"\">Tilaisuuksien haku epäonnistui</option>";
                         }
 
-                        ?>
-                    </select>
-                </div>
-                <div class="col col-2 input-group mb-3">
-                    <input type="text" id="jalk-rotu" class="form-control kriittinen" placeholder="rotulyh.">
-                </div>
-                <div class="col col-2 input-group mb-3" style="flex-grow:2;"><select id="jalk-skp"
-                        class="form-control kriittinen">
-                        <option value="" selected="" disabled="">Skp.</option>
-                        <option value="t">t</option>
-                        <option value="o">o</option>
-                        <option value="r">r</option>
-                    </select></div>
-                <div class="col input-group mb-3"><input type="text" id="jalk-nimi" class="form-control kriittinen"
-                        placeholder="Hevosen Nimi"></div>
-                <div class="col"><input type="text" id="jalk-VH" class="form-control kriittinen"
-                        placeholder="VH00-000-0000"></div>
+                        ?> </select>
             </div>
-            <div class="row form-group">
-                <div class="col-4 input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-link" data-toggle="tooltip" data-placement="top"
-                                title="Hevosen URL-osoite"></i></span>
-                    </div><input type="text" id="jalk-linkki" class="form-control kriittinen"
-                        placeholder="https://hevosenosoite.com">
-                </div>
-                <div class="col input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-info-circle" data-toggle="tooltip"
-                                data-placement="top" title="Lisätiedot / poikkeukset"></i></span>
-                    </div><input type="text" id="jalk-poikkeukset" class="form-control"
-                        placeholder="Lisätiedot / poikkeukset">
-                </div>
-                <div class="col-2 input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-calculator" data-toggle="tooltip"
-                                data-placement="top" title="Pisteet (jos tilaisuus valmis)"></i></span>
-                    </div><input type="number" step="0.01" id="jalk-pisteet" class="form-control" placeholder="0">
-                </div>
-                <div class="col-2 input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-trophy" data-toggle="tooltip" data-placement="top"
-                                title="Palkinto (jos tilaisuus valmis)"></i></span>
-                    </div><input type="text" id="jalk-palkinto" class="form-control" placeholder="Palkinto">
-                </div>
+            <div class="col col-2 input-group mb-3">
+                <input type="text" id="jalk-rotu" class="form-control kriittinen" placeholder="rotulyh.">
             </div>
-            <div class="row mb-3 mt-3 justify-content-center">
-                <button class="btn btn-info" id="siirrajalkiilmot" disabled>
-                    <i class="fas fa-arrow-alt-circle-down"></i> Siirrä tiedot tekstikenttään <i
-                        class="fas fa-arrow-alt-circle-down"></i>
-                </button>
-            </div>
-            <div class="mb-3">
-                <label for="jalkiilmot">Muotoonlaitetut tiedot:
-                    <code>VH;PISTEET;PALKINTO;ROTU-SKP;NIMI;LINKKI;POIKKEUKSET</code></label>
-                <textarea class="form-control" id="jalkiilmot"
-                    placeholder="VH;PISTEET;PALKINTO;ROTU-SKP;NIMI;LINKKI;POIKKEUKSET" required></textarea>
-                <div class="invalid-feedback"> Jokin tekstikentän tiedoista ei ole muotoonlaitettu oikein. Tarkista tiedot.
-                </div>
-            </div>
-            <button class="btn btn-success" id="lahetajalkiilmot" disabled>Lähetä tiedot</button>
+            <div class="col col-2 input-group mb-3" style="flex-grow:2;"><select id="jalk-skp"
+                    class="form-control kriittinen">
+                    <option value="" selected="" disabled="">Skp.</option>
+                    <option value="t">t</option>
+                    <option value="o">o</option>
+                    <option value="r">r</option>
+                </select></div>
+            <div class="col input-group mb-3"><input type="text" id="jalk-nimi" class="form-control kriittinen"
+                    placeholder="Hevosen Nimi"></div>
+            <div class="col"><input type="text" id="jalk-VH" class="form-control kriittinen"
+                    placeholder="VH00-000-0000"></div>
         </div>
+        <div class="row form-group">
+            <div class="col-4 input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-link" data-toggle="tooltip" data-placement="top"
+                            title="Hevosen URL-osoite"></i></span>
+                </div><input type="text" id="jalk-linkki" class="form-control kriittinen"
+                    placeholder="https://hevosenosoite.com">
+            </div>
+            <div class="col input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-info-circle" data-toggle="tooltip"
+                            data-placement="top" title="Lisätiedot / poikkeukset"></i></span>
+                </div><input type="text" id="jalk-poikkeukset" class="form-control"
+                    placeholder="Lisätiedot / poikkeukset">
+            </div>
+            <div class="col-2 input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-calculator" data-toggle="tooltip"
+                            data-placement="top" title="Pisteet (jos tilaisuus valmis)"></i></span>
+                </div><input type="number" step="0.01" id="jalk-pisteet" class="form-control" placeholder="0">
+            </div>
+            <div class="col-2 input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-trophy" data-toggle="tooltip" data-placement="top"
+                            title="Palkinto (jos tilaisuus valmis)"></i></span>
+                </div><input type="text" id="jalk-palkinto" class="form-control" placeholder="Palkinto">
+            </div>
+        </div>
+        <div class="row mb-3 mt-3 justify-content-center">
+            <button class="btn btn-info" id="siirrajalkiilmot" disabled>
+                <i class="fas fa-arrow-alt-circle-down"></i> Siirrä tiedot tekstikenttään <i
+                    class="fas fa-arrow-alt-circle-down"></i>
+            </button>
+        </div>
+        <div class="mb-3">
+            <label for="jalkiilmot">Muotoonlaitetut tiedot:
+                <code>VH;PISTEET;PALKINTO;ROTU-SKP;NIMI;LINKKI;POIKKEUKSET</code></label>
+            <textarea class="form-control" id="jalkiilmot"
+                placeholder="VH;PISTEET;PALKINTO;ROTU-SKP;NIMI;LINKKI;POIKKEUKSET" required></textarea>
+            <div class="invalid-feedback"> Jokin tekstikentän tiedoista ei ole muotoonlaitettu oikein. Tarkista tiedot.
+            </div>
+        </div>
+        <button class="btn btn-success" id="lahetajalkiilmot" disabled>Lähetä tiedot</button>
     </div>
+</div>
 
-    <hr />
+<hr />
 
-    <h2 id="tuloksettomat">Tuloksettomat tilaisuudet</h2>
-    <p>Admin-puolen osallistujataulukoissa näkyvät kaikki hevoset, myös ne jotka eivät ole mahtumassa mukaan. Tunnistat
-        tilaisuuden maksimiosallistujamäärän ulkopuolelle jäävät rivit keltaisesta kuvakkeesta.</p>
-    <?php
+<h2 id="tuloksettomat">Tuloksettomat tilaisuudet</h2>
+<p>Admin-puolen osallistujataulukoissa näkyvät kaikki hevoset, myös ne jotka eivät ole mahtumassa mukaan. Tunnistat
+    tilaisuuden maksimiosallistujamäärän ulkopuolelle jäävät rivit keltaisesta kuvakkeesta.</p> <?php
 
     if ($conn) {
         // tulevat tilaisuudet
@@ -449,12 +437,11 @@ ORDER BY kt.Til_ID ASC LIMIT 20");
         }
     } ?>
 
-    <hr />
+<hr />
 
-    <h2 data-toggle="collapse" data-target="#arkistoc" aria-expanded="false" aria-controls="arkistoc">Muokkaa valmiita
-        tilaisuuksia <i class="fas fa-caret-down"></i></h2>
-    <div class="collapse mt-4" id="arkistoc">
-        <?php if ($conn) {
+<h2 data-toggle="collapse" data-target="#arkistoc" aria-expanded="false" aria-controls="arkistoc">Muokkaa valmiita
+    tilaisuuksia <i class="fas fa-caret-down"></i></h2>
+<div class="collapse mt-4" id="arkistoc"> <?php if ($conn) {
             // tulevat tilaisuudet
             $tilsut = $conn->prepare("SELECT t.*, max(o.Pisteet), max(o.Palkinto), CONCAT(COALESCE(max(o.Pisteet),''), COALESCE(max(o.Palkinto),'')) as Palkintopisteet, count(k.Rivi_ID) as Keikat FROM Tilaisuus t
 LEFT JOIN Osallistuminen o ON o.Til_ID = t.Til_ID 
@@ -496,17 +483,13 @@ ORDER BY t.Pvm DESC");
             }
 
             echo "</table>";
-        } ?>
-    </div>
-    <?php
-} else { ?>
-    <p>Olet tekemässä ylläpitäjien toimintoja. Anna salasana.</p>
-    <form method="POST" action="valtuuta.php">
-        <input type="password" name="password">
-        <input type="hidden" value="admin/tilaisuuksienhallinta.php" name="paluu">
-        <button class="btn btn-success" type="submit">Valtuuta</button>
-    </form>
-<?php }
+        } ?> </div> <?php
+} else { ?> <p>Olet tekemässä ylläpitäjien toimintoja. Anna salasana.</p>
+<form method="POST" action="valtuuta.php">
+    <input type="password" name="password">
+    <input type="hidden" value="admin/tilaisuuksienhallinta.php" name="paluu">
+    <button class="btn btn-success" type="submit">Valtuuta</button>
+</form> <?php }
 
 
 $conn = null;

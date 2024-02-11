@@ -40,15 +40,16 @@ function haeOsallistujataulukko($tiettytilaisuus = '0', $admintaulukko = false)
 
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $tilsu = $conn->prepare("SELECT T.*, COUNT(O.Os_ID) as Oslkm, COUNT(IF(Varahevonen='1', 1, NULL)) as Varahevosia FROM Osallistuminen O 
+        $tilsu = $conn->prepare("SELECT T.*, COUNT(O.Os_ID) as Oslkm, COUNT(IF(Varahevonen='1', 1, NULL)) as Varahevosia, COUNT(IF(Varahevonen='0', 1, NULL)) as Osallistujia FROM Osallistuminen O 
 	JOIN Tilaisuus T ON T.Til_ID = O.Til_ID 
-    WHERE T.Til_ID >= '$tiettytilaisuus' 
+    WHERE T.Til_ID <= '$tiettytilaisuus' 
     GROUP BY T.Til_ID
     ORDER BY T.Pvm DESC;");
 
         $tilsu->execute();
-        $til = $tilsu->fetch();
-        $edellinentil = $tilsu->fetch();
+        $tils = $tilsu->fetchAll();
+        $til = $tils[0];
+        $edellinentil = $tils[1];
 
         if (empty($edellinentil)) {
             $edellinentil = array("Til_ID" => "0");
@@ -71,7 +72,7 @@ function haeOsallistujataulukko($tiettytilaisuus = '0', $admintaulukko = false)
             echo (!$admintaulukko ? "class=\"mt-4\"" : " style=\"margin-top:0;\"");
             echo "><tr><td colspan=\"" . (!$admintaulukko ? "4" : "5") . "\">Ei tiedossa olevaa seuraavaa tilaisuutta</td></tr></table>";
             return;
-        } else if (empty($til)) {
+        } else if (empty($til) || $til['Oslkm'] < 1 || $til['Til_ID'] != $tiettytilaisuus) {
             echo "<table";
             echo (!$admintaulukko ? "class=\"mt-4\"" : " style=\"margin-top:0;\"");
             echo "><tr><td colspan=\"" . (!$admintaulukko ? "4" : "5") . "\">Ei osallistujia</td></tr></table>";
@@ -79,6 +80,8 @@ function haeOsallistujataulukko($tiettytilaisuus = '0', $admintaulukko = false)
         }
 
         $maksimi = $til['Maxos'];
+        $varahevosia = $til['Varahevosia'];
+        $osallistujia = $til['Osallistujia'];
 
         // tavallisten osallistujien osallistumiset
         $sql = "SELECT O.*, H.*, T.* FROM Osallistuminen O
@@ -103,7 +106,7 @@ function haeOsallistujataulukko($tiettytilaisuus = '0', $admintaulukko = false)
         $stmt->execute([$til['Til_ID'], $edellinentil['Til_ID']]);
 
         $rows = $stmt->fetchAll();
-
+        // tuomareiden osallistumiset
         $stmt2 = $conn->prepare("SELECT O.*, H.*, T.* FROM Osallistuminen O
             JOIN Hevonen H ON H.VH = O.VH
             JOIN Tilaisuus T ON T.Til_ID = O.Til_ID
@@ -120,14 +123,12 @@ function haeOsallistujataulukko($tiettytilaisuus = '0', $admintaulukko = false)
         $stmt2->execute([$til['Til_ID'], $edellinentil['Til_ID']]);
         $th = $stmt2->fetchAll();
 
-
-
         echo "<table rel=\"" . $til['Til_ID'] . "\" ";
         echo (!$admintaulukko ? "class=\"mt-4\"" : " style=\"margin-top:0;\"");
         echo ">";
         if (!empty($til)) {
             echo "<t" . (!$admintaulukko ? "r><th" : "r class=\"ots-dark\"><td") . " colspan=\"" . (!$admintaulukko ? "3" : "4\" style=\"font-size: small; padding-top: 0.2em; padding-bottom: 0.2em;\"") . "\">" . (!empty($til['Otsikko']) ? $til['Otsikko'] : $kuukausi[date('m', strtotime($til['Pvm']))] . "n tilaisuus") . ", " . date('d.m.Y', strtotime($til['Pvm']));
-            echo " (max. " . $til['Maxos'] . " os.)";
+            echo " (" . $osallistujia - count($th) . " + " . count($th) . " / " . $til['Maxos'] . " os.)";
             echo "</th></tr>";
         }
 
@@ -174,7 +175,7 @@ function haeOsallistujataulukko($tiettytilaisuus = '0', $admintaulukko = false)
             $nthrow++;
         }
 
-        echo "<t" . (!$admintaulukko ? "r><th" : "r class=\"ots-dark\"><td") . " colspan=\"" . (!$admintaulukko ? "3" : "4\" style=\"font-size: small; padding-top: 0.2em; padding-bottom: 0.2em;\"") . "\">Tuomareiden hevoset</th></tr>";
+        echo "<t" . (!$admintaulukko ? "r><th" : "r class=\"ots-dark\"><td") . " colspan=\"" . (!$admintaulukko ? "3" : "4\" style=\"font-size: small; padding-top: 0.2em; padding-bottom: 0.2em;\"") . "\">Tuomareiden hevoset (" . count($th) . " kpl)</th></tr>";
 
 
         if (count($th) < 1) {
@@ -202,7 +203,7 @@ function haeOsallistujataulukko($tiettytilaisuus = '0', $admintaulukko = false)
         if (!$admintaulukko) {
             echo "<i>Varsinaisia osallistujia tällä hetkellä " . $ossumma . " kpl";
             if ($til['Oslkm'] > $til['Maxos']) {
-                echo ", lisäksi jonossa ja varalla yhteensä " . ($til['Oslkm'] - $til['Maxos']) . " hevosta";
+                echo ", lisäksi jonossa ja varalla yhteensä " . $varahevosia . " hevosta";
             }
             echo ". Varahevoset arvostellaan ilmoittautumisjärjestyksessä vain, jos tilaisuus jää osallistujamäärältään vajaaksi</i>\r\n";
             if ($ossumma >= $til['Maxos']) {

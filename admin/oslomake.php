@@ -119,11 +119,14 @@ else if (!empty($seuraavatil) && date('Y-m-d') < date('Y-m-d', strtotime($seuraa
 
 <hr />
 <?php
-foreach ($avoimet as $aid => $a) {
+foreach ($avoinnaolevat as $a) {
+    if ($a['IlmoAlku'] > date('Y-m-d')) {
+        continue;
+    }
     echo "<h2>Ilmoittautuneet, ";
     echo (!empty($a['Otsikko']) ? $a['Otsikko'] : strtolower($kuukausi[date('m', strtotime($a['Pvm']))]) . "n tilaisuus");
     echo "</h2>";
-    haeOsallistujataulukko($aid);
+    haeOsallistujataulukko($a['Til_ID']);
     echo "<hr/>";
 }
 

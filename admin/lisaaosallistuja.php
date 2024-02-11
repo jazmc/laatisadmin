@@ -123,6 +123,7 @@ try {
         // jos heppa on jo tietokannassa:
         if (count($onkotuomari->fetchAll()) > 0 && $osallistumisia < $tuomarienhevosmaara) {
             // on tuomari, lisää
+            $olitilaa = true;
             if (!$oslisays->execute([strtoupper($vh), $vrl, $til_id, $linkki, $skp, $varahevonen, $poikkeukset])) {
                 $palautusviesti .= "Hevosen " . $vh . " lisääminen tilaisuuteen epäonnistui.\n";
             } else {
